@@ -1,12 +1,12 @@
-﻿@model ECOMMERCE_MVC.Models.Admin
+﻿@model ECOMMERCE_MVC.Models.Category
 @{
-    ViewData["Title"] = "Index";
-
+    ViewData["Title"] = "AddCategory";
 }
+
 <form method="post" asp-action="Index">
     <br>
     <div class="border p-3">
-    
+
         <div class="form-group row">
             <h1 style="text-align: center;">Administrator Sign In</h1>
         </div>
@@ -14,24 +14,15 @@
             <div class="col-8">
                 <div class="form-group row">
                     <div class="col-4">
-                        <label asp-for="Email"></label>
+                        <label asp-for="CategoryText"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <input asp-for="CategoryText" class="form-control" />
+                        <span asp-validation-for="CategoryText" class="text-danger"></span>
                     </div>
 
                 </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="Password"></label>
-                    </div>
-                    <div class="col-8">
-                        <input type="password" asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-
-                </div>
+              
                 <div class="form-group row">
                     <div class="col-8 offset-4 row">
 
@@ -44,21 +35,12 @@
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="col-4">
-                @* Keep this empty *@
-                
-            </div>
+        </div>
+        <div class="col-4">
+            @* Keep this empty *@
+
         </div>
     </div>
-    </form>
-
-
-
-    @section Scripts{
-
-        @{
-            <partial name="_ValidationScriptsPartial" />
-        }
-    }
+    </div>
+</form>
 
