@@ -50,9 +50,25 @@ namespace ECOMMERCE_MVC.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddCategory(Category a)
+        {
+            InsertCategory(a);
+            
+            return RedirectToAction("ViewProducts");
+        }
 
 
+        public int InsertCategory(Category a)
+        {
+            _connection.Open();
+            string query = $"Insert into Category(categorytext) values('{a.CategoryText}')";
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows= command.ExecuteNonQuery();
+            return rows;
 
+        }
 
         public int FirstInsert(Admin a)
         {

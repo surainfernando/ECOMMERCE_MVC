@@ -3,7 +3,7 @@
     ViewData["Title"] = "AddCategory";
 }
 
-<form method="post" asp-action="Index">
+<form method="post" asp-action="AddCategory">
     <br>
     <div class="border p-3">
 
@@ -27,10 +27,10 @@
                     <div class="col-8 offset-4 row">
 
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Sign In" />
+                            <input type="submit" class="btn btn-info w-100" value="Add Category" />
                         </div>
                         <div class="col">
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                            <a asp-controller="Admin" asp-action="ViewProducts" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
                         </div>
                     </div>
                 </div>
