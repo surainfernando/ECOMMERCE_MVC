@@ -8,7 +8,7 @@
     <div class="border p-3">
 
         <div class="form-group row">
-            <h1 style="text-align: center;">Administrator Sign In</h1>
+            <h1 style="text-align: center;"> Sign In</h1>
         </div>
         <div class="row">
             <div class="col-8">
@@ -44,17 +44,20 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-8">
-                        <a asp-controller="Home" asp-action="Index"><span style="color:darkgray"> <u>Sign Up</u></span></a>
-                    </div>
-                </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-4"> <a asp-controller="Customer1" asp-action="Register"><span style="color:darkgray"> <u>Would you like to sign up?</u></span></a></div>
+                    <div class="col-md-4"></div>
+                    
+                       
+                    
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            @* Keep this empty *@
+    </div>
+    <div class="col-4">
+        @* Keep this empty *@
 
-        </div>
+    </div>
     </div>
 
 </form>
@@ -67,4 +70,3 @@
         <partial name="_ValidationScriptsPartial" />
     }
 }
-
