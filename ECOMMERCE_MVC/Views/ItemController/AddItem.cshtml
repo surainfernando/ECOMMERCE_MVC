@@ -1,0 +1,81 @@
+﻿@model ECOMMERCE_MVC.Models.Item
+@{
+    ViewData["Title"] = "AddItem";
+}
+
+
+<form method="post" asp-action="AddCategory">
+    <br>
+    <div class="border p-3">
+
+        <div class="form-group row">
+            <h1 style="text-align: center;">Add Item</h1>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Description" rows="4" cols="50"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="CategoryText"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="CategoryText" class="form-control" />
+                        <span asp-validation-for="CategoryText" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleTextarea">Example textarea</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ImageLink"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="ImageLink" class="form-control" />
+                        <span asp-validation-for="ImageLink" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Add Category" />
+                        </div>
+                        <div class="col">
+                            <a asp-controller="Admin" asp-action="ViewProducts" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            @* Keep this empty *@
+
+        </div>
+    </div>
+    </div>
+</form>
+

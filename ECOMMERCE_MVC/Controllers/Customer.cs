@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace ECOMMERCE_MVC.Controllers
 {
-    public class ItemController1 : Controller
+    public class Customer : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult AddItem()
         {
             return View();
         }
