@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 namespace ECOMMERCE_MVC.Models
 {
     public class Item
-    { public int ItemId { get; set; }
+    {
+        public Item()
+        { 
+        }
+        
+        public int ItemId { get; set; }
         [Required]
+        [Display(Name = "Product Name")]
         public string Name { get; set; }
         [Required]
         [ScaffoldColumn(true)]
@@ -26,7 +32,7 @@ namespace ECOMMERCE_MVC.Models
         public int IsAvailable { get; set; }
         [Required]
         [Display(Name = "Selling Price")]
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         public int SellerId { get; set; }
         public int CurrentOwner { get; set; }
@@ -37,8 +43,87 @@ namespace ECOMMERCE_MVC.Models
         public static int InsertItemDB(Item a,SqlConnection _connection)
         {
             _connection.Open();
-            float price = a.Price;
-            float positiveprice = price > 0 ? price : -price;//convert price to positive
+            double price = a.Price;
+            double positiveprice = price > 0 ? price : -price;//convert price to positive
+            string query = $"Insert into Item(name,description,categorytext,imagelink,isavailable,price,sellerid,currentowner) values('{a.Name}','{a.Description}','{a.CategoryText}','{a.ImageLink}',1,{positiveprice},1,1)";
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows = command.ExecuteNonQuery();
+            _connection.Close();
+            return rows;
+
+
+
+        }
+       
+        public static List<Item> GetSellersItems(int id, SqlConnection _connection)
+        {
+            List<Item> ItemList = new List<Item>();
+            _connection.Open();
+            string query = $"select * from item where sellerid ={id}";
+           SqlCommand command = new SqlCommand(query, _connection);
+           SqlDataReader datareader=command.ExecuteReader();
+            while (datareader.Read())
+            {
+                Item item = new Item() {
+                    ItemId = (int)datareader["itemid"],
+                    Name = (string)datareader["name"],
+                    Description = (string)datareader["description"],
+                    CategoryText = (string)datareader["categorytext"],
+                    ImageLink = (string)datareader["imagelink"],
+                    IsAvailable = (int)datareader["isavailable"],
+                    SellerId = (int)datareader["sellerid"],
+                    CurrentOwner = (int)datareader["currentowner"],
+                    Price = Convert.ToDouble(datareader["Price"])
+
+                };
+                ItemList.Add(item);
+            
+            }
+            datareader.Close();
+            _connection.Close();
+            return ItemList;
+
+
+
+        }
+
+        public static Item GetOneSellersItem(int id, SqlConnection _connection)
+        {
+            Item retitem = null;
+            _connection.Open();
+            string query = $"select * from item where itemid={id}";
+            SqlCommand command = new SqlCommand(query, _connection);
+            SqlDataReader datareader = command.ExecuteReader();
+            while (datareader.Read())
+            {
+                retitem = new Item()
+                {
+                    ItemId = (int)datareader["itemid"],
+                    Name = (string)datareader["name"],
+                    Description = (string)datareader["description"],
+                    CategoryText = (string)datareader["categorytext"],
+                    ImageLink = (string)datareader["imagelink"],
+                    IsAvailable = (int)datareader["isavailable"],
+                    SellerId = (int)datareader["sellerid"],
+                    CurrentOwner = (int)datareader["currentowner"],
+                    Price = Convert.ToDouble(datareader["Price"])
+
+                };
+                
+
+            }
+            datareader.Close();
+            _connection.Close();
+            return retitem;
+
+
+
+        }
+        public static int EditItemDb(Item a, SqlConnection _connection)
+        {
+            _connection.Open();
+            double price = a.Price;
+            double positiveprice = price > 0 ? price : -price;//convert price to positive
             string query = $"Insert into Item(name,description,categorytext,imagelink,isavailable,price,sellerid,currentowner) values('{a.Name}','{a.Description}','{a.CategoryText}','{a.ImageLink}',1,{positiveprice},1,1)";
             SqlCommand command = new SqlCommand(query, _connection);
             int rows = command.ExecuteNonQuery();
