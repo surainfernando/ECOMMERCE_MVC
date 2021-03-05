@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -124,7 +125,31 @@ namespace ECOMMERCE_MVC.Models
             _connection.Open();
             double price = a.Price;
             double positiveprice = price > 0 ? price : -price;//convert price to positive
-            string query = $"Insert into Item(name,description,categorytext,imagelink,isavailable,price,sellerid,currentowner) values('{a.Name}','{a.Description}','{a.CategoryText}','{a.ImageLink}',1,{positiveprice},1,1)";
+               string query = $"update item set price={positiveprice} ,name='{a.Name}',description='{a.Description}',categorytext='{a.CategoryText}',imagelink='{a.ImageLink}'  where itemid={a.ItemId}";
+            //string query = $"update item set name='{a.Name}' where itemid={a.ItemId}";
+
+            Debug.WriteLine("Edit 2");
+            Debug.WriteLine(query);
+
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows = command.ExecuteNonQuery();
+            _connection.Close();
+            return rows;
+
+
+
+        }
+        public static int DeleteItemDb(int a, SqlConnection _connection)
+        {
+            _connection.Open();
+            
+           
+            string query = $"Delete from item   where itemid={a}";
+            //string query = $"update item set name='{a.Name}' where itemid={a.ItemId}";
+
+            Debug.WriteLine("Delete2 2");
+            Debug.WriteLine(query);
+
             SqlCommand command = new SqlCommand(query, _connection);
             int rows = command.ExecuteNonQuery();
             _connection.Close();

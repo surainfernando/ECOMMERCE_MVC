@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ namespace ECOMMERCE_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddItem(Item a)
         {
+            Console.WriteLine("Add Command");
+            Debug.WriteLine("http:// My debug string here");
             InsertItemDB(a);
             return RedirectToAction("Index");
         }
@@ -52,9 +55,19 @@ namespace ECOMMERCE_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditItem(Item a)
         {
-           // Item.EditItemDb(a, _connection);
-            
-            return View(a);
+            Debug.WriteLine("http:// Edit  called");
+            // Item.EditItemDb(a, _connection);
+            int row = Item.EditItemDb(a, _connection);
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult DeleteItem(int id)
+        {
+            Debug.WriteLine("http:// Edit  called");
+            // Item.EditItemDb(a, _connection);
+            int row = Item.DeleteItemDb(id, _connection);
+
+            return RedirectToAction("Index");
         }
 
 
