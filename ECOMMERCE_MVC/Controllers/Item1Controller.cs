@@ -25,7 +25,7 @@ namespace ECOMMERCE_MVC.Controllers
          
         public IActionResult Index()
         {
-            ViewBag.Name="Surain";
+            ViewBag.Name="Surakkin"+ TempData["id"];
             ViewBag.FName = rettemp();
             List<Item> objList = Item.GetSellersItems(1,_connection); ;
           

@@ -1,5 +1,6 @@
 ﻿using ECOMMERCE_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,27 @@ namespace ECOMMERCE_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public readonly SqlConnection _connection;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SqlConnection con)
         {
             _logger = logger;
+            _connection = con;
         }
+
 
         public IActionResult Index()
         {
-            return View();
+            List<Item> objList = Item.GetSellersItems(1, _connection); ;
+
+            return View(objList);
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult ItemView()
         {
             return View();
         }

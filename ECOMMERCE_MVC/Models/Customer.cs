@@ -63,10 +63,12 @@ namespace ECOMMERCE_MVC.Models
             SqlDataReader dataReader = command.ExecuteReader();
             string dbEmail = "";
             string dbPassword = "";
+            int id = 0;
             while (dataReader.Read())
             {
                 dbEmail = (string)dataReader["Email"];
                 dbPassword = (string)dataReader["Password"];
+                id=(int)dataReader["id"];
             }
 
             if (dbEmail == "")
@@ -77,7 +79,7 @@ namespace ECOMMERCE_MVC.Models
             {
                 if (dbPassword == password)
                 {
-                    return 1;
+                    return id;
 
                 }
                 else

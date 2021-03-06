@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "ItemView";
+}
+<body onload="ConfirmDelete()">
+    <h1>ItemView</h1>
+    <h1 id="id1"></h1>
+    <button onclick="setLocalStorage()" value="Delete temp">Delete temp</button>
+</body>
+@section Scripts{
+
+    <script type="text/javascript">
+        function ConfirmDelete() {
+            var ls;
+            ls = localStorage;
+            
+            var custStr = ls.getItem("Email");
+            if (custStr == null) {
+
+                document.getElementById("id1").innerHTML = "rocky"
+            }
+            else {
+                document.getElementById("id1").innerHTML = custStr
+            }
+
+        }
+
+        function setLocalStorage() {
+            var ls;
+            ls = localStorage;
+            ls.setItem("Email", "s@gmail.com");
+
+
+        }
+
+    </script>
+}
+
+
+

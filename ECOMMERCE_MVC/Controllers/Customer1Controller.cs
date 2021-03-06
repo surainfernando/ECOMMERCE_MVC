@@ -26,18 +26,25 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult Index(ECOMMERCE_MVC.Models.Customer a)
         {
             int s= ECOMMERCE_MVC.Models.Customer.LoginDB(a, _connection);
-            
-            if (s == 1) { return RedirectToAction("Index","Item1"); }
-            else if (s == 0)
+
+           
+               
+           
+             if (s == 0)
             {
                 ModelState.AddModelError("Email", "The Email is incorrect");
                 return View();
             }
-            else
+            else if (s == 2)
             {
                 ModelState.AddModelError("Password", "The  Password is incorrect");
                 return View();
 
+            }
+            else {
+                TempData["id"] = s;
+
+                return RedirectToAction("Index", "Item1");
             }
 
         }
@@ -53,7 +60,7 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult Register(Models.Customer a)
         {
             int d = ECOMMERCE_MVC.Models.Customer.InsertCustomer(a,_connection);
-            return RedirectToAction("Index","Item1");
+            return RedirectToAction("Index","Item1",new { id=47});
         }
 
 
