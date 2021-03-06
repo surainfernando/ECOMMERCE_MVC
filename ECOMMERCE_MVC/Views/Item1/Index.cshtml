@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<body onload="show()">
+<body>
 <h1>Details of items to be sold</h1>
 
 
@@ -12,8 +12,12 @@
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">@ViewBag.Name</h2>
-            <input type="hidden" value="@ViewBag.Name" id="id1"/>
+            <input type="hidden" value="@ViewBag.Name" id="id1"/><br />
+            @ViewBag.NName<br />
+            @ViewBag.Email
             <button onclick="show()">Show</button>
+            <a asp-controller="Customer1" asp-action="Logout">logout</a>
+          
 
         </div>
         <div class="col-6 text-right">

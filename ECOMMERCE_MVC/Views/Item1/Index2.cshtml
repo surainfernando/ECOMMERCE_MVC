@@ -1,0 +1,56 @@
+﻿@model ECOMMERCE_MVC.Models.Customer
+@{
+    ViewData["Title"] = "Index2";
+}
+
+<body onload="tempfunc()">
+    <input type="hidden" value="@ViewBag.Id" id="id" />
+    <input type="hidden" value="@ViewBag.Name" id="name" />
+    <input type="hidden" value="@ViewBag.Email" id="email" />
+    @ViewBag.Email <br />@ViewBag.Name<br />@ViewBag.Id
+
+
+    <h1>  @Html.DisplayFor(Model => Model.Name)</h1>
+    <h1>  @Html.DisplayFor(Model => Model.Id)</h1>
+    <h1>  @Html.DisplayFor(Model => Model.Address)</h1>
+    <h1>  @Html.DisplayFor(Model => Model.Password)</h1>
+    <h1>  @Html.DisplayFor(Model => Model.Email)</h1>
+
+    <button onclick="show()">dfdfdf</button>
+    <a asp-controller="Item1" asp-action="Index">ddddd</a>
+</body>
+
+@section Scripts{ 
+    <script type="text/javascript">
+           function tempfunc()
+           {var r = confirm("ffffffffff");
+
+             var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+           var email= document.getElementById("email").value;
+
+           var ls;
+         ls = localStorage;
+         ls.setItem("MVCEmail", email);
+         ls.setItem("MVCName", name);
+         ls.setItem("MVCId", id);
+
+        }
+
+
+         function show()
+         {
+             var ls = localStorage;
+
+             var name = ls.getItem("MVCName");
+             var email = ls.getItem("MVCEmail");
+             var id = ls.getItem("MVCId");
+         //var r = confirm("ffffffffff");
+          var r = confirm("name"+name+" "+"email"+email+"id"+id);
+         }
+
+
+
+    </script>
+
+}

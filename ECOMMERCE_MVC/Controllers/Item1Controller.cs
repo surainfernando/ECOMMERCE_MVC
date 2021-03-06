@@ -7,12 +7,17 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace ECOMMERCE_MVC.Controllers
 {
     public class Item1Controller : Controller
     {
         public readonly SqlConnection _connection;
+
+        public string email="";
+        public string name = "";
       
         public string temp { get; set; }
         public Item1Controller(SqlConnection con)
@@ -23,12 +28,29 @@ namespace ECOMMERCE_MVC.Controllers
             _connection = con;
         }
          
+        public IActionResult Index2()
+        { 
+            
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("StudentSession"));
+
+                return View(customer);
+            }
+            catch (Exception e)
+            {
+                Customer customer = null;
+                return View(customer);
+            }
+           
+
+;
+        }
         public IActionResult Index()
         {
-            ViewBag.Name="Surakkin"+ TempData["id"];
-            ViewBag.FName = rettemp();
-            List<Item> objList = Item.GetSellersItems(1,_connection); ;
-          
+            
+            List<Item> objList = Item.GetSellersItems(1, _connection); ;
+
             return View(objList);
         }
         public IActionResult AddItem()
@@ -69,6 +91,34 @@ namespace ECOMMERCE_MVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public void getCustomerDetails(int idd)
+        {
+            // SqlConnection connection = new SqlConnection();
+            // connection.ConnectionString= $@"Data Source=LAPTOP-FAS31PRJ;Initial Catalog=EcommerceBook;User Id=LAPTOP-FAS31PRJ\surai;Password=;Integrated Security=true";
+            _connection.Open();
+            //String email = a.Email;
+           
+            string query = $"select * from customer where id={idd}";
+            Console.WriteLine(query);
+            SqlCommand command = new SqlCommand(query, _connection);
+            SqlDataReader dataReader = command.ExecuteReader();
+            
+            
+            while (dataReader.Read())
+            {
+               email = (string)dataReader["Email"];
+               name = (string)dataReader["name"];
+               
+          
+            }
+
+            _connection.Close();
+
+
+        }
+
+
 
 
 

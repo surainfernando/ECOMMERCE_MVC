@@ -27,6 +27,15 @@ namespace ECOMMERCE_MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+            
+            });
+
+
             // connection.ConnectionString = $@"Data Source=LAPTOP-FAS31PRJ;Initial Catalog=EcommerceBook;User Id=LAPTOP-FAS31PRJ\surai;Password=;Integrated Security=true";
             services.AddTransient<SqlConnection>(db => new SqlConnection(Configuration.GetConnectionString("ConnectionString")));
             services.AddControllersWithViews();
@@ -51,6 +60,7 @@ namespace ECOMMERCE_MVC
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

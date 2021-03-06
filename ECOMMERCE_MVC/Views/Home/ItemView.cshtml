@@ -5,7 +5,8 @@
 <body onload="ConfirmDelete()">
     <h1>ItemView</h1>
     <h1 id="id1"></h1>
-    <button onclick="setLocalStorage()" value="Delete temp">Delete temp</button>
+    <button onclick="show()" value="Delete temp">Delete temp</button>
+    <button asp-controller="Home" asp-action="TempSession">Delete temp</button>
 </body>
 @section Scripts{
 
@@ -31,6 +32,16 @@
             ls.setItem("Email", "s@gmail.com");
 
 
+        }
+
+        function show() {
+            var ls = localStorage;
+
+            var name = ls.getItem("MVCName");
+            var email = ls.getItem("MVCEmail");
+            var id = ls.getItem("MVCId");
+            //var r = confirm("ffffffffff");
+            var r = confirm("name" + name + " " + "email" + email + "id" + id);
         }
 
     </script>

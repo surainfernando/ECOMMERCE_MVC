@@ -70,6 +70,7 @@ namespace ECOMMERCE_MVC.Models
                 dbPassword = (string)dataReader["Password"];
                 id=(int)dataReader["id"];
             }
+            _connection.Close();
 
             if (dbEmail == "")
             {
@@ -90,6 +91,41 @@ namespace ECOMMERCE_MVC.Models
             }
 
 
+        }
+        public static  Customer getCustomerDetails(int idd, SqlConnection _connection)
+        {
+            // SqlConnection connection = new SqlConnection();
+            // connection.ConnectionString= $@"Data Source=LAPTOP-FAS31PRJ;Initial Catalog=EcommerceBook;User Id=LAPTOP-FAS31PRJ\surai;Password=;Integrated Security=true";
+            _connection.Open();
+            //String email = a.Email;
+
+            string query = $"select * from customer where id={idd}";
+            Console.WriteLine(query);
+            SqlCommand command = new SqlCommand(query, _connection);
+            SqlDataReader dataReader = command.ExecuteReader();
+            Customer customer = null;
+
+            while (dataReader.Read())
+            {
+                customer = new Customer()
+                {
+                    Name = (String)dataReader["name"],
+                    Address = (String)dataReader["address"],
+                    Id = (int)dataReader["id"],
+                    Password = (String)dataReader["password"],
+                   Email = (String)dataReader["email"],
+                   ConfirmPassword = (String)dataReader["password"],
+                };
+         
+                
+
+
+            }
+
+
+            _connection.Close();
+
+            return customer;
         }
     }
 }

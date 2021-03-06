@@ -5,6 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using ECOMMERCE_MVC.Models;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using ECOMMERCE_MVC.Models;
+
 
 namespace ECOMMERCE_MVC.Controllers
 {
@@ -19,6 +23,11 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index","Item1");
         }
 
         [HttpPost]
@@ -43,8 +52,12 @@ namespace ECOMMERCE_MVC.Controllers
             }
             else {
                 TempData["id"] = s;
+                Models.Customer customer = Models.Customer.getCustomerDetails(s, _connection);
+                HttpContext.Session.SetString("StudentSession", JsonConvert.SerializeObject(customer));
 
-                return RedirectToAction("Index", "Item1");
+
+
+                return RedirectToAction("Index2", "Item1");
             }
 
         }
@@ -62,6 +75,10 @@ namespace ECOMMERCE_MVC.Controllers
             int d = ECOMMERCE_MVC.Models.Customer.InsertCustomer(a,_connection);
             return RedirectToAction("Index","Item1",new { id=47});
         }
+
+       
+
+
 
 
 
