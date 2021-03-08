@@ -24,7 +24,7 @@ namespace ECOMMERCE_MVC.Controllers
 
         public IActionResult Index()
         {
-            List<Item> objList = Item.GetSellersItems(1, _connection); ;
+            List<Item> objList = Item.GetSellersItems(-99, _connection); ;
 
             return View(objList);
         }

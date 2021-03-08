@@ -53,7 +53,7 @@ namespace ECOMMERCE_MVC.Controllers
             else {
                 TempData["id"] = s;
                 Models.Customer customer = Models.Customer.getCustomerDetails(s, _connection);
-                HttpContext.Session.SetString("StudentSession", JsonConvert.SerializeObject(customer));
+                HttpContext.Session.SetString("CustomerSession", JsonConvert.SerializeObject(customer));
 
 
 

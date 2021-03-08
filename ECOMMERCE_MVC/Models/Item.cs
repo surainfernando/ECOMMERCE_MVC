@@ -41,12 +41,12 @@ namespace ECOMMERCE_MVC.Models
 
 
 
-        public static int InsertItemDB(Item a,SqlConnection _connection)
+        public static int InsertItemDB(Item a,SqlConnection _connection,int currentId)
         {
             _connection.Open();
             double price = a.Price;
             double positiveprice = price > 0 ? price : -price;//convert price to positive
-            string query = $"Insert into Item(name,description,categorytext,imagelink,isavailable,price,sellerid,currentowner) values('{a.Name}','{a.Description}','{a.CategoryText}','{a.ImageLink}',1,{positiveprice},1,1)";
+            string query = $"Insert into Item(name,description,categorytext,imagelink,isavailable,price,sellerid,currentowner) values('{a.Name}','{a.Description}','{a.CategoryText}','{a.ImageLink}',1,{positiveprice},{currentId},{currentId})";
             SqlCommand command = new SqlCommand(query, _connection);
             int rows = command.ExecuteNonQuery();
             _connection.Close();
@@ -61,6 +61,11 @@ namespace ECOMMERCE_MVC.Models
             List<Item> ItemList = new List<Item>();
             _connection.Open();
             string query = $"select * from item where sellerid ={id}";
+            if (id == -99)
+            {
+                query = $"select * from item";
+
+            }
            SqlCommand command = new SqlCommand(query, _connection);
            SqlDataReader datareader=command.ExecuteReader();
             while (datareader.Read())

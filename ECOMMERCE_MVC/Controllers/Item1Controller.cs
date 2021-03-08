@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 
+
 namespace ECOMMERCE_MVC.Controllers
 {
     public class Item1Controller : Controller
@@ -33,7 +34,7 @@ namespace ECOMMERCE_MVC.Controllers
             
             try
             {
-                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("StudentSession"));
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
 
                 return View(customer);
             }
@@ -48,8 +49,9 @@ namespace ECOMMERCE_MVC.Controllers
         }
         public IActionResult Index()
         {
-            
-            List<Item> objList = Item.GetSellersItems(1, _connection); ;
+            var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+
+            List<Item> objList = Item.GetSellersItems(customer.Id, _connection); ;
 
             return View(objList);
         }
@@ -60,10 +62,11 @@ namespace ECOMMERCE_MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddItem(Item a)
-        {
+        {     
             Console.WriteLine("Add Command");
             Debug.WriteLine("http:// My debug string here");
-            InsertItemDB(a);
+            var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+            Item.InsertItemDB(a, _connection, customer.Id);
             return RedirectToAction("Index");
         }
 
@@ -133,15 +136,15 @@ namespace ECOMMERCE_MVC.Controllers
 
 
 
-        public int InsertItemDB(Item a)//
+        /*public int InsertItemDB(Item a)//
         {
-            int rows=Item.InsertItemDB(a,_connection);//call insert item method in Item Model
+            //int rows=Item.InsertItemDB(a,_connection);//call insert item method in Item Model
             return rows;
            
 
 
 
-        }
+        }*/
 
         
 
