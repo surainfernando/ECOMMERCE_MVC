@@ -43,6 +43,7 @@ namespace ECOMMERCE_MVC.Models
             string query = $"Insert into Customer(name,email,password,address) values('{a.Name}','{a.Email}','{a.Password}','{a.Address}')";
             SqlCommand command = new SqlCommand(query, _connection);
             int rows = command.ExecuteNonQuery();
+            
             _connection.Close();
             return rows;
 
@@ -118,6 +119,42 @@ namespace ECOMMERCE_MVC.Models
                 };
          
                 
+
+
+            }
+
+
+            _connection.Close();
+
+            return customer;
+        }
+
+        public static Customer getCustomerDetailsByEmail(string email, SqlConnection _connection)
+        {
+            // SqlConnection connection = new SqlConnection();
+            // connection.ConnectionString= $@"Data Source=LAPTOP-FAS31PRJ;Initial Catalog=EcommerceBook;User Id=LAPTOP-FAS31PRJ\surai;Password=;Integrated Security=true";
+            _connection.Open();
+            //String email = a.Email;
+
+            string query = $"select * from customer where email='{email}'";
+            Console.WriteLine(query);
+            SqlCommand command = new SqlCommand(query, _connection);
+            SqlDataReader dataReader = command.ExecuteReader();
+            Customer customer = null;
+
+            while (dataReader.Read())
+            {
+                customer = new Customer()
+                {
+                    Name = (String)dataReader["name"],
+                    Address = (String)dataReader["address"],
+                    Id = (int)dataReader["id"],
+                    Password = (String)dataReader["password"],
+                    Email = (String)dataReader["email"],
+                    ConfirmPassword = (String)dataReader["password"],
+                };
+
+
 
 
             }

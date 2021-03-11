@@ -8,7 +8,7 @@ using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using ECOMMERCE_MVC.Models;
-
+using System.Diagnostics;
 
 namespace ECOMMERCE_MVC.Controllers
 {
@@ -20,9 +20,18 @@ namespace ECOMMERCE_MVC.Controllers
         {
             _connection = con;
         }
-        public IActionResult Index()
+        public IActionResult Index() ///login page
         {
-            return View();
+
+            try {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                return RedirectToAction("Profile", "Customer1");
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+          
         }
         public IActionResult Logout()
         {
@@ -57,7 +66,7 @@ namespace ECOMMERCE_MVC.Controllers
 
 
 
-                return RedirectToAction("Index2", "Item1");
+                return RedirectToAction("Profile", "Customer1");
             }
 
         }
@@ -66,17 +75,50 @@ namespace ECOMMERCE_MVC.Controllers
 
         public IActionResult Register()
         {
-            return View();
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                return RedirectToAction("Profile", "Customer1");
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(Models.Customer a)
         {
             int d = ECOMMERCE_MVC.Models.Customer.InsertCustomer(a,_connection);
-            return RedirectToAction("Index","Item1",new { id=47});
+            Debug.Write("Integer Message Is"+d);
+            if (d == 1)
+            {
+                Models.Customer customer = Models.Customer.getCustomerDetailsByEmail(a.Email, _connection);
+                HttpContext.Session.SetString("CustomerSession", JsonConvert.SerializeObject(customer));
+                return RedirectToAction("Index", "Item1", new { id = 47 });
+            }
+            else {
+                return RedirectToAction("Index", "Home");
+            }
+
+            
+        }
+        public IActionResult Profile() {
+            try { var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                return View();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Item1");
+                
+            }
+            
+        
+        
         }
 
-       
+
+
 
 
 

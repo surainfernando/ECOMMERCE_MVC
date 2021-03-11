@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 namespace ECOMMERCE_MVC.Controllers
 {
     public class Item1Controller : Controller
-    {
+    { //item displa  link
         public readonly SqlConnection _connection;
 
         public string email="";
@@ -49,12 +49,24 @@ namespace ECOMMERCE_MVC.Controllers
         }
         public IActionResult Index()
         {
-            var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+            try {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
 
-            List<Item> objList = Item.GetSellersItems(customer.Id, _connection); ;
+                List<Item> objList = Item.GetSellersItems(customer.Id, _connection); ;
 
-            return View(objList);
+                return View(objList);
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+            
+            }
+
+           
         }
+
+
         public IActionResult AddItem()
         {
             return View();
@@ -65,9 +77,19 @@ namespace ECOMMERCE_MVC.Controllers
         {     
             Console.WriteLine("Add Command");
             Debug.WriteLine("http:// My debug string here");
-            var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
-            Item.InsertItemDB(a, _connection, customer.Id);
-            return RedirectToAction("Index");
+
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                Item.InsertItemDB(a, _connection, customer.Id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+            
         }
 
         public IActionResult EditItem(int id)
@@ -80,22 +102,42 @@ namespace ECOMMERCE_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditItem(Item a)
         {
-            Debug.WriteLine("http:// Edit  called");
-            // Item.EditItemDb(a, _connection);
-            int row = Item.EditItemDb(a, _connection);
 
-            return RedirectToAction("Index");
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                Debug.WriteLine("http:// Edit  called");
+                // Item.EditItemDb(a, _connection);
+                int row = Item.EditItemDb(a, _connection);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+            }
+           
         }
         public IActionResult DeleteItem(int id)
         {
-            Debug.WriteLine("http:// Edit  called");
-            // Item.EditItemDb(a, _connection);
-            int row = Item.DeleteItemDb(id, _connection);
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
 
-            return RedirectToAction("Index");
+                Debug.WriteLine("http:// Edit  called");
+                // Item.EditItemDb(a, _connection);
+                int row = Item.DeleteItemDb(id, _connection);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+            }
+           
         }
 
-        public void getCustomerDetails(int idd)
+        public void getCustomerDetails1(int idd)
         {
             // SqlConnection connection = new SqlConnection();
             // connection.ConnectionString= $@"Data Source=LAPTOP-FAS31PRJ;Initial Catalog=EcommerceBook;User Id=LAPTOP-FAS31PRJ\surai;Password=;Integrated Security=true";
