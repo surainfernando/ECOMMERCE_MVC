@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace ECOMMERCE_MVC.Controllers
 {
@@ -33,9 +35,30 @@ namespace ECOMMERCE_MVC.Controllers
         {
             return View();
         }
-        public IActionResult ItemView()
+        public IActionResult ItemView(int id)
         {
-            return View();
+            Item item = Item.GetOneSellersItem(id, _connection);
+            ViewBag.ItemName = item.Name;
+            return View(item);
+            
+          
+        }
+
+        public IActionResult AddToCart(int id)
+        {
+
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                // Debug.WriteLine("http:// Edit  called");
+                CartItem.AddCartItem(customer.Id,id, _connection);
+                Item.AddToCart(id, _connection);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+            }
         }
 
         public IActionResult TempSession()

@@ -1,12 +1,29 @@
-﻿
+﻿@model ECOMMERCE_MVC.Models.Item;
 @{
     ViewData["Title"] = "ItemView";
 }
-<body onload="ConfirmDelete()">
-    <h1>ItemView</h1>
-    <h1 id="id1"></h1>
-    <button onclick="show()" value="Delete temp">Delete temp</button>
-    <button asp-controller="Home" asp-action="TempSession">Delete temp</button>
+<body>
+    <br/><br/><br/>
+    <div class="row">
+
+        <div class='col-5'>
+            <img src="@Model.ImageLink" width="400px"/>
+
+        </div>
+        <div class='col-6' style="word-break: break-word;">
+            <p class="product_name">@Model.Name</p>
+            <p><span class="price_title">Price:<t /> </span><span class="price_amount">Rs.@Model.Price</span><span style="color:black;font-size: 1.255rem;"> + </span><span class="price_title"> Free Shipping<t /> </span></p>
+            <p class="about_title">About this item </p>
+            <p class="description"> @Model.Description</p>
+            <input hidden value="@Model.ItemId">
+            <a class="btn btn-info" asp-controller="Home"  asp-action="AddToCart" asp-route-Id="@Model.ItemId"> <i class="fas fa-cart-plus"> Add To Cart</i> </a>
+
+
+        </div>
+
+
+
+    </div>
 </body>
 @section Scripts{
 

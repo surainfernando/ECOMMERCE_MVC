@@ -1,0 +1,43 @@
+﻿
+/* buttton css */
+.buy {
+    border-radius: 25%;
+    background-color: chartreuse;
+    text-decoration-color: white;
+}
+
+
+/* controller home actin viewdetails */
+.price_title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    ;
+}
+
+.price_amount {
+    color: firebrick;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.product_name {
+    font-size: 2rem;
+    ;
+    font-weight: bold;
+    color: black;
+    text-transform: capitalize;
+}
+
+.about_title {
+    font-size: 1.4rem;
+    ;
+    font-weight: bold;
+    color: black;
+    text-transform: capitalize;
+}
+
+.description {
+    font-size: 1.25rem;
+    font-weight: bold;
+}body {
+}

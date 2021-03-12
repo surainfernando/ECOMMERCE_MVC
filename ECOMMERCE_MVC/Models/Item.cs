@@ -58,12 +58,14 @@ namespace ECOMMERCE_MVC.Models
        
         public static List<Item> GetSellersItems(int id, SqlConnection _connection)
         {
+            // this method will be used for multiple purposes. If normal id is passed, a particualr sellers items will be returnes
+            // but if -99 is passed as id , it means it's for diaply purposes only in home page, so all itrms will be returned.
             List<Item> ItemList = new List<Item>();
             _connection.Open();
             string query = $"select * from item where sellerid ={id}";
             if (id == -99)
             {
-                query = $"select * from item";
+                query = $"select * from item where isavailable=1";
 
             }
            SqlCommand command = new SqlCommand(query, _connection);
@@ -149,7 +151,26 @@ namespace ECOMMERCE_MVC.Models
             _connection.Open();
             
            
-            string query = $"Delete from item   where itemid={a}";
+            string query = $"Delete from item  where itemid={a}";
+            //string query = $"update item set name='{a.Name}' where itemid={a.ItemId}";
+
+           // Debug.WriteLine("Delete2 2");
+           // Debug.WriteLine(query);
+
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows = command.ExecuteNonQuery();
+            _connection.Close();
+            return rows;
+
+
+
+        }
+        public static int AddToCart(int a, SqlConnection _connection)
+        {
+            _connection.Open();
+
+
+            string query = $"Update  item   set isavailable=2    where itemid={a}";
             //string query = $"update item set name='{a.Name}' where itemid={a.ItemId}";
 
             Debug.WriteLine("Delete2 2");
