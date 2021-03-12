@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-
+using System.Net;
 
 namespace ECOMMERCE_MVC.Controllers
 {
@@ -77,6 +77,7 @@ namespace ECOMMERCE_MVC.Controllers
         {     
             Console.WriteLine("Add Command");
             Debug.WriteLine("http:// My debug string here");
+            a.ImageLink = DoesImageExistRemotely(a.ImageLink);
 
             try
             {
@@ -102,6 +103,7 @@ namespace ECOMMERCE_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditItem(Item a)
         {
+            a.ImageLink = DoesImageExistRemotely(a.ImageLink);
 
             try
             {
@@ -166,6 +168,11 @@ namespace ECOMMERCE_MVC.Controllers
 
 
 
+    
+
+
+
+
 
 
 
@@ -188,7 +195,34 @@ namespace ECOMMERCE_MVC.Controllers
 
         }*/
 
-        
+        public static string DoesImageExistRemotely(string uriToImage)
+        {
+            
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriToImage);
+
+                request.Method = "HEAD";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return uriToImage;
+                    }
+                    else
+                    {
+                        return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
+                    }
+                }
+            }
+            catch (WebException) { return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"; }
+            catch
+            {
+                return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
+            }
+        }
 
 
 

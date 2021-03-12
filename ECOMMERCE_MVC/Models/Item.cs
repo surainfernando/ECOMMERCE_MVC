@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ECOMMERCE_MVC.Models
@@ -95,6 +96,51 @@ namespace ECOMMERCE_MVC.Models
 
         }
 
+        public static List<Item> GetitemsForHome(int id, SqlConnection _connection)
+        {
+            // this method will be used for multiple purposes. If normal id is passed, a particualr sellers items will be returnes
+            // but if -99 is passed as id , it means it's for diaply purposes only in home page, so all itrms will be returned.
+            List<Item> ItemList = new List<Item>();
+            
+            _connection.Open();
+            string query = $"select * from item where  isavailable=1 and sellerid!={id} ";
+            if (id == -99)
+            {
+                query = $"select * from item where isavailable=1";
+
+            }
+            SqlCommand command = new SqlCommand(query, _connection);
+            SqlDataReader datareader = command.ExecuteReader();
+            while (datareader.Read())
+            {
+                Item item = new Item()
+                {
+                    ItemId = (int)datareader["itemid"],
+                    Name = (string)datareader["name"],
+                    Description = (string)datareader["description"],
+                    CategoryText = (string)datareader["categorytext"],
+                    ImageLink = (string)datareader["imagelink"],
+                    IsAvailable = (int)datareader["isavailable"],
+                    SellerId = (int)datareader["sellerid"],
+                    CurrentOwner = (int)datareader["currentowner"],
+                    Price = Convert.ToDouble(datareader["Price"])
+
+                };
+                ItemList.Add(item);
+
+            }
+            datareader.Close();
+            _connection.Close();
+            return ItemList;
+
+
+
+        }
+
+
+
+
+
         public static Item GetOneSellersItem(int id, SqlConnection _connection)
         {
             Item retitem = null;
@@ -184,5 +230,33 @@ namespace ECOMMERCE_MVC.Models
 
 
         }
-    }
+
+        public static string DoesImageExistRemotely(string uriToImage)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriToImage);
+
+            request.Method = "HEAD";
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return uriToImage;
+                    }
+                    else
+                    {
+                        return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
+                    }
+                }
+            }
+            catch (WebException) { return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"; }
+            catch
+            {
+                return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
+            }
+        }
+    }//
 }

@@ -5,9 +5,12 @@
 <body>
     <br/><br/><br/>
     <div class="row">
+      
 
         <div class='col-5'>
-            <img src="@Model.ImageLink" width="400px"/>
+          
+           
+            <img src="@Model.ImageLink" width="400px" alt = "image" onerror="http://tachkent.fr/wp-content/uploads/2013/03/port_item.jpg"/>
 
         </div>
         <div class='col-6' style="word-break: break-word;">
@@ -16,7 +19,7 @@
             <p class="about_title">About this item </p>
             <p class="description"> @Model.Description</p>
             <input hidden value="@Model.ItemId">
-            <a class="btn btn-info" asp-controller="Home"  asp-action="AddToCart" asp-route-Id="@Model.ItemId"> <i class="fas fa-cart-plus"> Add To Cart</i> </a>
+            <a class="btn btn-info" asp-controller="Cart"  asp-action="AddToCart" asp-route-Id="@Model.ItemId"> <i class="fas fa-cart-plus"> Add To Cart</i> </a>
 
 
         </div>

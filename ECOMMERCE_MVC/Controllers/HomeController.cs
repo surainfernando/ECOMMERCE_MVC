@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace ECOMMERCE_MVC.Controllers
 {
@@ -25,10 +26,22 @@ namespace ECOMMERCE_MVC.Controllers
 
 
         public IActionResult Index()
-        {
-            List<Item> objList = Item.GetSellersItems(-99, _connection); ;
+        {  
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                // Debug.WriteLine("http:// Edit  called");
+                List<Item> objList = Item.GetitemsForHome(customer.Id, _connection); ;
+                return View(objList);
+            }
+            catch (Exception e)
+            {
+                List<Item> objList = Item.GetitemsForHome(-99, _connection); ;
+                return View(objList);
+            }
+           
 
-            return View(objList);
+            
         }
 
         public IActionResult Privacy()
@@ -38,28 +51,14 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult ItemView(int id)
         {
             Item item = Item.GetOneSellersItem(id, _connection);
-            ViewBag.ItemName = item.Name;
+            item.ImageLink = DoesImageExistRemotely(item.ImageLink);
+            //ViewBag.ItemName = item.Name;
             return View(item);
             
           
         }
 
-        public IActionResult AddToCart(int id)
-        {
-
-            try
-            {
-                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
-                // Debug.WriteLine("http:// Edit  called");
-                CartItem.AddCartItem(customer.Id,id, _connection);
-                Item.AddToCart(id, _connection);
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Index", "Customer1");
-            }
-        }
+       
 
         public IActionResult TempSession()
         {
@@ -71,6 +70,41 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+
+
+
+
+
+        public static string DoesImageExistRemotely(string uriToImage)
+        {
+           
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriToImage);
+
+                request.Method = "HEAD";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return uriToImage;
+                    }
+                    else
+                    {
+                        return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
+                    }
+                }
+            }
+            catch (WebException) { return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"; }
+            catch
+            {
+                return "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
+            }
         }
     }
 }
