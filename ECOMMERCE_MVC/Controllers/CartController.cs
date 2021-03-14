@@ -20,7 +20,20 @@ namespace ECOMMERCE_MVC.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+
+                List<Item> objList = CartItem.GetCartItems(1, _connection);
+
+                return View(objList);
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
         }
 
         public IActionResult AddToCart(int id)

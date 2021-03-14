@@ -8,15 +8,16 @@
 
 
 /* controller home actin viewdetails */
-.price_title1{
-    color: darkgreen;
-    font-weight: bold;
+.price_title1 {
+    color: dimgrey;
+    font-weight: 500;
     font-size: 1.25rem;
 }
 
 .price_amount {
-    color: greenyellow;
+    color: firebrick;
     font-size: 1.25rem;
+ 
     font-weight: bold;
 }
 
@@ -28,7 +29,6 @@
 
 .product_name {
     font-size: 2rem;
-    ;
     font-weight: bold;
     color: black;
     text-transform: capitalize;
@@ -36,7 +36,7 @@
 
 .about_title {
     font-size: 1.4rem;
-    ;
+   
     font-weight: bold;
     color: black;
     text-transform: capitalize;
@@ -44,5 +44,6 @@
 
 .description {
     font-size: 1.25rem;
-    font-weight: bold;
+    color: #3A3434;
+    font-weight: 500;
 }
