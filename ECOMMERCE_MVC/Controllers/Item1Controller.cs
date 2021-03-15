@@ -122,6 +122,7 @@ namespace ECOMMERCE_MVC.Controllers
         }
         public IActionResult DeleteItem(int id)
         {
+
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));

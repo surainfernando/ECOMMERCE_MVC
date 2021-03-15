@@ -29,6 +29,16 @@ namespace ECOMMERCE_MVC.Models
 
         }
 
+        public static int DeleteCartItem(SqlConnection _connection, int id)
+        {
+            string sql = $"Delete from cart where itemid={id}";
+            _connection.Open();
+            SqlCommand command = new SqlCommand(sql,_connection);
+            int x = command.ExecuteNonQuery();
+            _connection.Close();
+            return x;
+        
+        }
 
         public static List<Item> GetCartItems(int id, SqlConnection _connection)
         {

@@ -96,19 +96,26 @@ namespace ECOMMERCE_MVC.Models
 
         }
 
-        public static List<Item> GetitemsForHome(int id, SqlConnection _connection)
+        public static List<Item> GetitemsForHome(int id, SqlConnection _connection, string option)
         {
             // this method will be used for multiple purposes. If normal id is passed, a particualr sellers items will be returnes
             // but if -99 is passed as id , it means it's for diaply purposes only in home page, so all itrms will be returned.
             List<Item> ItemList = new List<Item>();
-            
+            Debug.WriteLine("------------------------------------------------");
+            Debug.WriteLine(option);
             _connection.Open();
-            string query = $"select * from item where  isavailable=1 and sellerid!={id} ";
+            string query = $"select * from item where  isavailable=1 and sellerid!={id} and categorytext='{option}'";
             if (id == -99)
             {
-                query = $"select * from item where isavailable=1";
+                if (option.Equals("All"))
+                {
+                    query = $"select * from item where isavailable=1 ";
+                }
+                else { query = $"select * from item where isavailable=1 and categorytext='{option}'"; }
+               
 
             }
+            Debug.WriteLine(query);
             SqlCommand command = new SqlCommand(query, _connection);
             SqlDataReader datareader = command.ExecuteReader();
             while (datareader.Read())

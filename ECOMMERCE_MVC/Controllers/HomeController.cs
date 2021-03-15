@@ -17,6 +17,15 @@ namespace ECOMMERCE_MVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         public readonly SqlConnection _connection;
+        enum selectoptions { 
+        All,
+        Books,
+        Computer,
+        Phone,
+        Electronics,
+        Kitchenware
+
+        }
 
         public HomeController(ILogger<HomeController> logger, SqlConnection con)
         {
@@ -25,18 +34,44 @@ namespace ECOMMERCE_MVC.Controllers
         }
 
 
-        public IActionResult Index()
-        {  
+        public IActionResult Index(String? option)
+        {   
+            string optiontext;
+            if (option == null)
+            {
+                ViewBag.option = $"0";
+                optiontext = "All";
+            }
+            else
+            {
+                int index = 0;
+                foreach (selectoptions val in Enum.GetValues(typeof(selectoptions)))
+                {
+                    string xx = Convert.ToString(val);
+                    Console.WriteLine(val);
+                    
+                    if (String.Equals(option, xx))
+                    {
+                        
+
+                        break;
+                    }
+                    index++;
+                }
+                ViewBag.option = $"{index}";
+                optiontext = option;
+            }
+           
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 // Debug.WriteLine("http:// Edit  called");
-                List<Item> objList = Item.GetitemsForHome(customer.Id, _connection); ;
+                List<Item> objList = Item.GetitemsForHome(customer.Id, _connection,optiontext); ;
                 return View(objList);
             }
             catch (Exception e)
             {
-                List<Item> objList = Item.GetitemsForHome(-99, _connection); ;
+                List<Item> objList = Item.GetitemsForHome(-99, _connection,optiontext); ;
                 return View(objList);
             }
            
@@ -44,8 +79,10 @@ namespace ECOMMERCE_MVC.Controllers
             
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy(String id)
         {
+            ViewBag.name = id;
+            ViewBag.name1 = "fffff";
             return View();
         }
         public IActionResult ItemView(int id)
