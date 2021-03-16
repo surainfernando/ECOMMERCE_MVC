@@ -21,21 +21,32 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="navbar-brand">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index">Sign In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index">Shopping Cart</a>
-                        </li>
+                        @if (String.Equals(ViewData["IsLogged"], "true"))
+                        {
+                            <li class="navbar-brand" style=" position: absolute !important; right: 400px;">
+                                <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index"><i class="fa fa-user"></i> Profile</a>
+                            </li>
+
+                        }
+                        else
+                        {
+                    <li class="navbar-brand" style=" position: absolute !important; right: 400px;">
+                        <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index"> Sign In</a>
+                    </li>
+                        }
+
+
+
+                        @if (String.Equals(ViewData["IsLogged"], "true"))
+                        {
+                            <li class="navbar-brand" style=" position: absolute !important; right: 280px;">
+                                <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index"><i class="fas fa-cart-plus"></i> Cart</a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
             </div>

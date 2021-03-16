@@ -1,6 +1,7 @@
 ﻿@model List<ECOMMERCE_MVC.Models.Item>
 @{
     ViewData["Title"] = "Home Page";
+    ViewData["IsLogged"] = @ViewBag.IsLogged;
 }
 <body onload="setInitialSelection(@ViewBag.option)">
 <div>
@@ -85,12 +86,15 @@
 
         function Search() {
             var x = document.getElementById("searchbox").value;
-            console.log("x===="+x)
+            if (x != "" && x != null) {
+                 console.log("x===="+x)
             window.location.href = '@Url.Action("Search", "Home")?searchtext1=' +x;
+            }
+
         }
 
         function RefreshPage() {
-           
+
             window.location.href = '@Url.Action("Index", "Home")?searchtext1=' +"All";
         }
 

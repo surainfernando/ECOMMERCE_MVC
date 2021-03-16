@@ -72,6 +72,7 @@ namespace ECOMMERCE_MVC.Controllers
                 try
                 {
                     var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                    ViewBag.IsLogged = "true";
                     // Debug.WriteLine("http:// Edit  called");
                     List<Item> objList = Item.GetitemsForHome(customer.Id, _connection, optiontext); ;
                     return View(objList);
@@ -79,6 +80,7 @@ namespace ECOMMERCE_MVC.Controllers
                 catch (Exception e)
                 {
                     List<Item> objList = Item.GetitemsForHome(-99, _connection, optiontext); ;
+                    ViewBag.IsLogged = "false";
                     return View(objList);
                 }
 
@@ -91,6 +93,8 @@ namespace ECOMMERCE_MVC.Controllers
         }
         public IActionResult Search(String? searchtext1)
         {
+
+            
             string searchtext;
             if (searchtext1 == null)
             {
@@ -107,7 +111,8 @@ namespace ECOMMERCE_MVC.Controllers
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 // Debug.WriteLine("http:// Edit  called");
                 List<Item> objList = Item.GetitemsForHomeSearch(customer.Id, _connection, searchtext); ;
-                return View(objList);
+                TempData["list"] = JsonConvert.SerializeObject(objList);
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception e)
             {

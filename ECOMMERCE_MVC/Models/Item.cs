@@ -29,7 +29,8 @@ namespace ECOMMERCE_MVC.Models
         public string CategoryText { get; set; }
         [Required]
         [Display(Name = "Image Link")]
-        public string ImageLink { get; set; }
+        public string ImageLink { get;
+            set; }
 
         public int IsAvailable { get; set; }
         [Required]
@@ -105,6 +106,12 @@ namespace ECOMMERCE_MVC.Models
             Debug.WriteLine(option);
             _connection.Open();
             string query = $"select * from item where  isavailable=1 and sellerid!={id} and categorytext='{option}'";
+
+            if (option.Equals("All"))
+            {
+                query = $"select * from item where isavailable=1  and sellerid!={id}";
+            }
+
             if (id == -99)
             {
                 if (option.Equals("All"))
@@ -155,37 +162,53 @@ namespace ECOMMERCE_MVC.Models
             Debug.WriteLine("------------------------------------------------");
          //   Debug.WriteLine(option);
             _connection.Open();
-            string query = $"select * from item  where isavailable=1 andsellerid!={id} and (description like '%{searchtext}%' or name like '%{searchtext}%'  or categorytext like '%{searchtext}%' )";
+            
+            string query = $"select * from item  where isavailable=1 and sellerid!={id} and (description like '%{searchtext}%' or name like '%{searchtext}%'  or categorytext like '%{searchtext}%' )";
+            
             if (id == -99)
             {
                  query = query = $"select * from item  where isavailable=1 and (description like '%{searchtext}%' or name like '%{searchtext}%'  or categorytext like '%{searchtext}%' )";
 
 
             }
+     
             Debug.WriteLine(query);
             SqlCommand command = new SqlCommand(query, _connection);
-            SqlDataReader datareader = command.ExecuteReader();
-            while (datareader.Read())
-            {
-                Item item = new Item()
-                {
-                    ItemId = (int)datareader["itemid"],
-                    Name = (string)datareader["name"],
-                    Description = (string)datareader["description"],
-                    CategoryText = (string)datareader["categorytext"],
-                    ImageLink = (string)datareader["imagelink"],
-                    IsAvailable = (int)datareader["isavailable"],
-                    SellerId = (int)datareader["sellerid"],
-                    CurrentOwner = (int)datareader["currentowner"],
-                    Price = Convert.ToDouble(datareader["Price"])
 
-                };
-                ItemList.Add(item);
+            try
+            {
+                SqlDataReader datareader = command.ExecuteReader();
+                while (datareader.Read())
+                {
+                    Item item = new Item()
+                    {
+                        ItemId = (int)datareader["itemid"],
+                        Name = (string)datareader["name"],
+                        Description = (string)datareader["description"],
+                        CategoryText = (string)datareader["categorytext"],
+                        ImageLink = (string)datareader["imagelink"],
+                        IsAvailable = (int)datareader["isavailable"],
+                        SellerId = (int)datareader["sellerid"],
+                        CurrentOwner = (int)datareader["currentowner"],
+                        Price = Convert.ToDouble(datareader["Price"])
+
+                    };
+                    ItemList.Add(item);
+
+                }
+                datareader.Close();
+                _connection.Close();
+                return ItemList;
 
             }
-            datareader.Close();
-            _connection.Close();
-            return ItemList;
+            catch (Exception e)
+            {
+
+                _connection.Close();
+                return ItemList;
+            }
+           
+            
 
 
 
