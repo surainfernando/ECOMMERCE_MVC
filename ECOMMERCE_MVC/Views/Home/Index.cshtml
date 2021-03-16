@@ -22,8 +22,8 @@
                     </div>
                 </div>   
                 <div class="col-1">  </div>
-                <div class="col-3" > <div class="row" style="padding-left:4px"><input type="text" placeholder="Search.." style=";height:34px;background-color:grey; border-radius: 4px;">  <button type="submit" style="border-radius: 4px; height: 34px; margin-left: 4px"><i class="fa fa-search"></i></button></div></div>
-                <div class="col-1"><div class="row"><button type="submit" style="border-radius: 4px; height: 34px; margin-left: 4px"><i class="fas fa-redo-alt"></i></button></div></div>
+                <div class="col-3" > <div class="row" style="padding-left:4px"><input id="searchbox" type="text" placeholder="Search.." style=";height:34px;background-color:grey; border-radius: 4px;">  <button onclick="Search()" style="border-radius: 4px; height: 34px; margin-left: 4px"><i class="fa fa-search"></i></button></div></div>
+                <div class="col-1"><div class="row"><button  onclick="RefreshPage()" style="border-radius: 4px; height: 34px; margin-left: 4px"><i class="fas fa-redo-alt"></i></button></div></div>
             </div>
         </div>
 
@@ -75,12 +75,24 @@
             idhh++
             var x = "grrtt"
          window.location.href = '@Url.Action("Index", "Home")?option='+options  ;
-            
+
 
         }
 
         function setInitialSelection(number) {
             document.getElementById("dropdown").selectedIndex=number
         }
+
+        function Search() {
+            var x = document.getElementById("searchbox").value;
+            console.log("x===="+x)
+            window.location.href = '@Url.Action("Search", "Home")?searchtext1=' +x;
+        }
+
+        function RefreshPage() {
+           
+            window.location.href = '@Url.Action("Index", "Home")?searchtext1=' +"All";
+        }
+
     </script>
 }

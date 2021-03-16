@@ -35,48 +35,92 @@ namespace ECOMMERCE_MVC.Controllers
 
 
         public IActionResult Index(String? option)
-        {   
-            string optiontext;
-            if (option == null)
+        {    if (TempData["list"] != null)
+            {
+                Debug.WriteLine("9999999999999999999999999999");
+                List<Item> objList = JsonConvert.DeserializeObject<List<Item>>((string)TempData["list"]);
+                return View(objList);
+            }
+
+            else {
+                string optiontext;
+                if (option == null)
+                {
+                    ViewBag.option = $"0";
+                    optiontext = "All";
+                }
+                else
+                {
+                    int index = 0;
+                    foreach (selectoptions val in Enum.GetValues(typeof(selectoptions)))
+                    {
+                        string xx = Convert.ToString(val);
+                        Console.WriteLine(val);
+
+                        if (String.Equals(option, xx))
+                        {
+
+
+                            break;
+                        }
+                        index++;
+                    }
+                    ViewBag.option = $"{index}";
+                    optiontext = option;
+                }
+
+                try
+                {
+                    var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                    // Debug.WriteLine("http:// Edit  called");
+                    List<Item> objList = Item.GetitemsForHome(customer.Id, _connection, optiontext); ;
+                    return View(objList);
+                }
+                catch (Exception e)
+                {
+                    List<Item> objList = Item.GetitemsForHome(-99, _connection, optiontext); ;
+                    return View(objList);
+                }
+
+
+
+
+            }
+
+
+        }
+        public IActionResult Search(String? searchtext1)
+        {
+            string searchtext;
+            if (searchtext1 == null)
             {
                 ViewBag.option = $"0";
-                optiontext = "All";
+                searchtext = "All";
             }
             else
             {
-                int index = 0;
-                foreach (selectoptions val in Enum.GetValues(typeof(selectoptions)))
-                {
-                    string xx = Convert.ToString(val);
-                    Console.WriteLine(val);
-                    
-                    if (String.Equals(option, xx))
-                    {
-                        
-
-                        break;
-                    }
-                    index++;
-                }
-                ViewBag.option = $"{index}";
-                optiontext = option;
+                searchtext = searchtext1;
             }
-           
+
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 // Debug.WriteLine("http:// Edit  called");
-                List<Item> objList = Item.GetitemsForHome(customer.Id, _connection,optiontext); ;
+                List<Item> objList = Item.GetitemsForHomeSearch(customer.Id, _connection, searchtext); ;
                 return View(objList);
             }
             catch (Exception e)
             {
-                List<Item> objList = Item.GetitemsForHome(-99, _connection,optiontext); ;
-                return View(objList);
-            }
-           
+                List<Item> objList = Item.GetitemsForHomeSearch(-99, _connection, searchtext);
+                Debug.WriteLine("88888888888888888888888888888888888888888888");
+                TempData["list"] = JsonConvert.SerializeObject(objList);
+                Debug.WriteLine("length="+objList.Count);
 
-            
+                return RedirectToAction("Index","Home");
+            }
+
+
+
         }
 
         public IActionResult Privacy(String id)

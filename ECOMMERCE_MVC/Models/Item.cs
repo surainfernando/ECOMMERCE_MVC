@@ -145,6 +145,53 @@ namespace ECOMMERCE_MVC.Models
         }
 
 
+        public static List<Item> GetitemsForHomeSearch(int id, SqlConnection _connection, string searchtext) 
+        {
+          /* This is the search function for home,ir is sellerid, searchtext is text enterd in the text
+           * Important : 
+           box*/
+            
+            List<Item> ItemList = new List<Item>();
+            Debug.WriteLine("------------------------------------------------");
+         //   Debug.WriteLine(option);
+            _connection.Open();
+            string query = $"select * from item  where isavailable=1 andsellerid!={id} and (description like '%{searchtext}%' or name like '%{searchtext}%'  or categorytext like '%{searchtext}%' )";
+            if (id == -99)
+            {
+                 query = query = $"select * from item  where isavailable=1 and (description like '%{searchtext}%' or name like '%{searchtext}%'  or categorytext like '%{searchtext}%' )";
+
+
+            }
+            Debug.WriteLine(query);
+            SqlCommand command = new SqlCommand(query, _connection);
+            SqlDataReader datareader = command.ExecuteReader();
+            while (datareader.Read())
+            {
+                Item item = new Item()
+                {
+                    ItemId = (int)datareader["itemid"],
+                    Name = (string)datareader["name"],
+                    Description = (string)datareader["description"],
+                    CategoryText = (string)datareader["categorytext"],
+                    ImageLink = (string)datareader["imagelink"],
+                    IsAvailable = (int)datareader["isavailable"],
+                    SellerId = (int)datareader["sellerid"],
+                    CurrentOwner = (int)datareader["currentowner"],
+                    Price = Convert.ToDouble(datareader["Price"])
+
+                };
+                ItemList.Add(item);
+
+            }
+            datareader.Close();
+            _connection.Close();
+            return ItemList;
+
+
+
+        }
+
+
 
 
 
