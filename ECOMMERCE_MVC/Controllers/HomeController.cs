@@ -138,8 +138,22 @@ namespace ECOMMERCE_MVC.Controllers
         {
             Item item = Item.GetOneSellersItem(id, _connection);
             item.ImageLink = DoesImageExistRemotely(item.ImageLink);
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                // Debug.WriteLine("http:// Edit  called");
+                // List<Item> objList = Item.GetitemsForHome(customer.Id, _connection, optiontext); ;
+                return View(item);
+            }
+            catch (Exception e)
+            {
+               // List<Item> objList = Item.GetitemsForHome(-99, _connection, optiontext); ;
+                ViewBag.IsLogged = "false";
+                return View(item);
+            }
             //ViewBag.ItemName = item.Name;
-            return View(item);
+            
             
           
         }

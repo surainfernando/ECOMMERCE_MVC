@@ -105,11 +105,12 @@ namespace ECOMMERCE_MVC.Controllers
         }
         public IActionResult Profile() {
             try { var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
                 return View();
             }
             catch (Exception e)
             {
-                return RedirectToAction("Index", "Item1");
+                return RedirectToAction("Index", "Customer1");
                 
             }
             

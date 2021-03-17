@@ -23,7 +23,7 @@ namespace ECOMMERCE_MVC.Controllers
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
-
+                ViewBag.IsLogged = "true";
                 List<Item> objList = CartItem.GetCartItems(1, _connection);
                 if ((objList != null) && (!objList.Any()))
                 {
@@ -84,6 +84,7 @@ namespace ECOMMERCE_MVC.Controllers
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 // Debug.WriteLine("http:// Edit  called");
                 CartItem.DeleteCartItem(_connection, id);
+                Item.ItemRemovedFromCart(id, _connection);
 
                 return RedirectToAction("Index");
             }
@@ -95,13 +96,32 @@ namespace ECOMMERCE_MVC.Controllers
 
         public IActionResult CheckOut()
         {
-            return View();
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                return View();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+            }
+           
         
         
         }
         public IActionResult PaymentSuccess()
         {
-            return View();
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                return View();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+            }
 
 
         }

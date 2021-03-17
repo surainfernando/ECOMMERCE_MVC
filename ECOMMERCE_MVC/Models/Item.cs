@@ -288,6 +288,28 @@ namespace ECOMMERCE_MVC.Models
 
 
         }
+
+        public static int ItemRemovedFromCart(int a, SqlConnection _connection)
+        {
+
+            _connection.Open();
+
+
+            string query = $"Update  item   set isavailable=1    where itemid={a}";
+            //string query = $"update item set name='{a.Name}' where itemid={a.ItemId}";
+
+            Debug.WriteLine("Delete2 2");
+            Debug.WriteLine(query);
+
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows = command.ExecuteNonQuery();
+            _connection.Close();
+            return rows;
+
+
+
+        }
+
         public static int AddToCart(int a, SqlConnection _connection)
         {
             _connection.Open();

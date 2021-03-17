@@ -15,20 +15,20 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
             <div class="container" >
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ECOMMERCE_MVC</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+               
+                
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="navbar-brand">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><span style="color:white"><i class="fas fa-home"></i> Home</span></a>
+                        </li>
+                        <li class="navbar-brand" style="vertical-align: middle; position: absolute;left: 50%;transform: translateX(-50%);bottom:0px;">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" style="vertical-align: middle;"><span style="color:#007bff;font-size:30px; font-family: 'Brush Script MT', cursive; ">MVC SHOP</span></a>
                         </li>
                         @if (String.Equals(ViewData["IsLogged"], "true"))
                         {
                             <li class="navbar-brand" style=" position: absolute !important; right: 400px;">
-                                <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index"><i class="fa fa-user"></i><span style="color:white"> Profile</span></a>
+                                <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index"><span style="color:white"><i class="fa fa-user"></i> Profile</span></a>
                             </li>
 
                         }
@@ -44,7 +44,7 @@
                         @if (String.Equals(ViewData["IsLogged"], "true"))
                         {
                             <li class="navbar-brand" style=" position: absolute !important; right: 280px;">
-                                <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index"><i class="fas fa-cart-plus"></i> Cart</a>
+                                <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index"><span style="color:white"><i class="fas fa-cart-plus"></i> Cart</span></a>
                             </li>
 
                         }

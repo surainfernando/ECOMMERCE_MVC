@@ -47,11 +47,11 @@ namespace ECOMMERCE_MVC.Controllers
 
 ;
         }
-        public IActionResult Index()
+        public IActionResult Index()                                    
         {
             try {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
-
+                ViewBag.IsLogged = "true";
                 List<Item> objList = Item.GetSellersItems(customer.Id, _connection); ;
 
                 return View(objList);
@@ -69,7 +69,21 @@ namespace ECOMMERCE_MVC.Controllers
 
         public IActionResult AddItem()
         {
-            return View();
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+               
+
+                return View();
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+           
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -83,6 +97,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 Item.InsertItemDB(a, _connection, customer.Id);
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -95,9 +110,22 @@ namespace ECOMMERCE_MVC.Controllers
 
         public IActionResult EditItem(int id)
         {
-            Item item = Item.GetOneSellersItem(id, _connection);
-            ViewBag.ItemName = item.Name;
-            return View(item);
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                Item item = Item.GetOneSellersItem(id, _connection);
+                ViewBag.ItemName = item.Name;
+                ViewBag.IsLogged = "true";
+                return View(item);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+
+
+           
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
