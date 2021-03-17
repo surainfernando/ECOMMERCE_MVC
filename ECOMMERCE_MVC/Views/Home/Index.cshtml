@@ -9,9 +9,10 @@
         <div class="col-8" style=" border-radius: 25px; background-color: #373a3c; position: fixed; padding-top: 10px; padding-top: 10px; padding-bottom: 10px; margin-top: 10px ">
             <div class="row">
                <div class="col-3"><label style="font-size:20px;color:antiquewhite;"> Filter Search</label></div>
-                <div class="col-3">
+                <div class="col-3" s>
                     <div class="row">
-                        <select id="dropdown"  class="form-control" onchange="reDirect(value)" onfocus="this.selectedIndex = -1;" style="background-color:grey">
+                        <div class="customerStyle" style="width:120px" >
+                        <select id="dropdown"  class="form-control" onchange="reDirect(value)" onfocus="this.selectedIndex = -1;" >
                            
                             <option value="All">All</option>
                             <option value="Books">Books</option>
@@ -20,11 +21,12 @@
                             <option value="Electronics">Electronics</option>
                             <option value="Kitchenware">Kitchenware</option>
                         </select>
+                            </div>
                     </div>
                 </div>   
                 <div class="col-1">  </div>
-                <div class="col-3" > <div class="row" style="padding-left:4px"><input id="searchbox" type="text" placeholder="Search.." style=";height:34px;background-color:grey; border-radius: 4px;">  <button onclick="Search()" style="border-radius: 4px; height: 34px; margin-left: 4px"><i class="fa fa-search"></i></button></div></div>
-                <div class="col-1"><div class="row"><button  onclick="RefreshPage()" style="border-radius: 4px; height: 34px; margin-left: 4px"><i class="fas fa-redo-alt"></i></button></div></div>
+                <div class="col-3" > <div class="row" style="padding-left:4px"><input id="searchbox" type="text" placeholder="Search.." style=";height:34px;background-color:white; border-radius: 4px;">  <button onclick="Search()" style="border-radius: 4px; height: 34px; margin-left: 4px;background-color:white;"><i class="fa fa-search"></i></button></div></div>
+                <div class="col-1"><div class="row"><button  onclick="RefreshPage()" style="border-radius: 4px; height: 34px; margin-left: 4px;background-color:white;"><i class="fas fa-redo-alt"></i></button></div></div>
             </div>
         </div>
 
@@ -70,6 +72,22 @@
 @section Scripts{
 
     <script type="text/javascript">
+          /**
+           * dropdiwn func
+           *
+           */
+
+       
+        /**
+           * dropdiwn func
+           *
+           */
+
+
+
+
+
+
 
         function reDirect(options) {
             var idhh = 134444;
