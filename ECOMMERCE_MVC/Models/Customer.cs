@@ -51,6 +51,22 @@ namespace ECOMMERCE_MVC.Models
 
         }
 
+        public static int UpdateProfile(Customer a, SqlConnection _connection)
+        {
+            _connection.Open();
+            // string query = $"Insert into customer(name) values('y')";
+
+            string query = $"update Customer set name='{a.Name}',email='{a.Email}',address='{a.Address}',password='{a.Password}' where id={a.Id}";
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows = command.ExecuteNonQuery();
+
+            _connection.Close();
+            return rows;
+
+
+
+        }
+
         public static int LoginDB(Customer a, SqlConnection _connection)
         {
             // SqlConnection connection = new SqlConnection();

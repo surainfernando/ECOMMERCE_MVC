@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using ECOMMERCE_MVC.Models;
 using System.Diagnostics;
 
+
 namespace ECOMMERCE_MVC.Controllers
 {
     public class Customer1Controller : Controller
@@ -118,7 +119,87 @@ namespace ECOMMERCE_MVC.Controllers
         
         }
 
-       
+        public IActionResult EditDetails()
+        {
+            try
+            {
+                ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                ViewBag.password = customer.Password;
+                return View(customer);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+            
+
+        
+        }
+
+        public IActionResult EditProfile()
+        {
+            try
+            {
+                ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                ViewBag.password = customer.Password;
+                return View(customer);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditProfile(Models.Customer customerobject)
+        {
+            try
+
+            {
+                ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                customerobject.Id = customer.Id;
+                customer.Name = customerobject.Name;
+                customer.Address = customerobject.Address;
+                customer.Email = customerobject.Email;
+
+                Models.Customer.UpdateProfile(customer, _connection);
+
+
+               
+                HttpContext.Session.SetString("CustomerSession", JsonConvert.SerializeObject(customer));
+                Debug.WriteLine("----------------------------------------------------------------------");
+                Debug.WriteLine(customerobject.Name);
+                Debug.WriteLine(customerobject.Email);
+                Debug.WriteLine(customerobject.Address);
+
+                return RedirectToAction("EditDetails", "Customer1");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+
+
+
+        }
+
+
+
+
+        public IActionResult EditPassword()
+        {
+
+            return View();
+        }
+
 
 
 
