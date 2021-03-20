@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using ECOMMERCE_MVC.Models;
+using System.Diagnostics;
 
 namespace ECOMMERCE_MVC.Controllers
 {
@@ -24,7 +25,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
-                List<Item> objList = CartItem.GetCartItems(1, _connection);
+                List<Item> objList = CartItem.GetCartItems(customer.Id, _connection);
                 if ((objList != null) && (!objList.Any()))
                 {
 
@@ -115,11 +116,29 @@ namespace ECOMMERCE_MVC.Controllers
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+               List<int> ItemIdList= CartItem.GetCartItemIdList(customer.Id, _connection);
+
+              //  Debug.WriteLine(ItemIdList.Count);
+                Debug.WriteLine("iiiiiiiiiiiiiiiiiiii");//int[] x=ItemIdList.GetRange(0,4).ToArray();
+                for (int i = 0; i < 5; i++)
+                {
+                    Debug.WriteLine(i);
+
+
+                }
+                Debug.WriteLine("xxooooooooooooooooooooooooooooooooooooooooo");
+               
+                int[] ItemIdListArray = ItemIdList.GetRange(0, ItemIdList.Count).ToArray();
+                string arraylist = string.Join(",", ItemIdListArray);
+                Debug.WriteLine(arraylist);
+                Item.ItemSold(arraylist,_connection);
+                CartItem.DeleteMultipleCartItem(customer.Id,_connection);
                 ViewBag.IsLogged = "true";
                 return View();
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e);
                 return RedirectToAction("Index", "Customer1");
             }
 
