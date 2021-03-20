@@ -197,7 +197,40 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult EditPassword()
         {
 
-            return View();
+            try
+            {
+                ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                ViewBag.password = customer.Password;
+                
+                return View(customer);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+        }
+
+        
+        public IActionResult EditPasswordAction(String? password)
+        {
+       
+;            
+            try
+            {
+                ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                Debug.WriteLine("Id==="+ customer.Id+password);
+                Models.Customer.UpdatePassword(password, customer.Id, _connection);
+                customer.Password = password;
+                HttpContext.Session.SetString("CustomerSession", JsonConvert.SerializeObject(customer));
+                return RedirectToAction("Index", "Customer1");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
         }
 
 

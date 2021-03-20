@@ -28,6 +28,7 @@ namespace ECOMMERCE_MVC.Models
 
         [NotMapped] // Does not effect with your database
         [Compare("Password")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
         [Required]
         public String Name { get; set; }
@@ -57,6 +58,22 @@ namespace ECOMMERCE_MVC.Models
             // string query = $"Insert into customer(name) values('y')";
 
             string query = $"update Customer set name='{a.Name}',email='{a.Email}',address='{a.Address}',password='{a.Password}' where id={a.Id}";
+            SqlCommand command = new SqlCommand(query, _connection);
+            int rows = command.ExecuteNonQuery();
+
+            _connection.Close();
+            return rows;
+
+
+
+        }
+
+        public static int UpdatePassword(string password,int id, SqlConnection _connection)
+        {
+            _connection.Open();
+            // string query = $"Insert into customer(name) values('y')";
+
+            string query = $"update Customer set password='{password}' where id={id}";
             SqlCommand command = new SqlCommand(query, _connection);
             int rows = command.ExecuteNonQuery();
 

@@ -96,6 +96,7 @@ namespace ECOMMERCE_MVC.Controllers
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                a.Price = Math.Round(a.Price);
                 Item.InsertItemDB(a, _connection, customer.Id);
 
                 return RedirectToAction("Index");
@@ -135,6 +136,7 @@ namespace ECOMMERCE_MVC.Controllers
 
             try
             {
+                a.Price = Math.Round(a.Price);
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 Debug.WriteLine("http:// Edit  called");
                 // Item.EditItemDb(a, _connection);
