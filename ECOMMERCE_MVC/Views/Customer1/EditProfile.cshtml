@@ -1,6 +1,8 @@
 ﻿@model ECOMMERCE_MVC.Models.Customer;
 @{
     ViewData["Title"] = "Edit Profile Details";
+    ViewData["IsLogged"] = @ViewBag.IsLogged;
+    ViewData["Name"] = @ViewBag.Name;
 }
 
 <form method="post" asp-action="EditProfile">

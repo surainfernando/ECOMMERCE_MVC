@@ -52,6 +52,7 @@ namespace ECOMMERCE_MVC.Controllers
             try {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 List<Item> objList = Item.GetSellersItems(customer.Id, _connection); ;
 
                 return View(objList);
@@ -72,6 +73,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 List<Item> objList = Item.GetSellersItemsInCart(customer.Id, _connection); ;
                
 
@@ -92,6 +94,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 List<Item> objList = Item.GetSellersSoldItems(customer.Id, _connection); ;
                 if ((objList != null) && (!objList.Any()))
                 {
@@ -135,7 +138,8 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
-               
+                ViewBag.Name = customer.Name;
+
 
                 return View();
 
@@ -159,6 +163,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 a.Price = Math.Round(a.Price);
+
                 Item.InsertItemDB(a, _connection, customer.Id);
 
                 return RedirectToAction("Index");
@@ -179,6 +184,7 @@ namespace ECOMMERCE_MVC.Controllers
                 Item item = Item.GetOneSellersItem(id, _connection);
                 ViewBag.ItemName = item.Name;
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 return View(item);
             }
             catch (Exception e)

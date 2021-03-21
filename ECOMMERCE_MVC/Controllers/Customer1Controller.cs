@@ -107,6 +107,7 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult Profile() {
             try { var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 return View();
             }
             catch (Exception e)
@@ -125,6 +126,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 ViewBag.password = customer.Password;
                 return View(customer);
             }
@@ -144,6 +146,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 ViewBag.password = customer.Password;
                 return View(customer);
             }
@@ -201,6 +204,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 ECOMMERCE_MVC.Models.Customer customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 ViewBag.password = customer.Password;
                 
                 return View(customer);

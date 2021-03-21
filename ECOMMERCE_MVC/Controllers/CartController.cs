@@ -25,6 +25,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 List<Item> objList = CartItem.GetCartItems(customer.Id, _connection);
                 if ((objList != null) && (!objList.Any()))
                 {
@@ -101,6 +102,7 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 return View();
             }
             catch (Exception e)
@@ -116,7 +118,9 @@ namespace ECOMMERCE_MVC.Controllers
             try
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
-               List<int> ItemIdList= CartItem.GetCartItemIdList(customer.Id, _connection);
+                ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
+                List<int> ItemIdList= CartItem.GetCartItemIdList(customer.Id, _connection);
 
               //  Debug.WriteLine(ItemIdList.Count);
                 Debug.WriteLine("iiiiiiiiiiiiiiiiiiii");//int[] x=ItemIdList.GetRange(0,4).ToArray();

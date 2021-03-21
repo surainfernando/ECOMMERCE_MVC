@@ -73,6 +73,7 @@ namespace ECOMMERCE_MVC.Controllers
                 {
                     var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                     ViewBag.IsLogged = "true";
+                    ViewBag.Name = customer.Name;
                     // Debug.WriteLine("http:// Edit  called");
                     List<Item> objList = Item.GetitemsForHome(customer.Id, _connection, optiontext); ;
                     return View(objList);
@@ -142,6 +143,8 @@ namespace ECOMMERCE_MVC.Controllers
             {
                 var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
                 ViewBag.IsLogged = "true";
+                ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
                 // Debug.WriteLine("http:// Edit  called");
                 // List<Item> objList = Item.GetitemsForHome(customer.Id, _connection, optiontext); ;
                 return View(item);

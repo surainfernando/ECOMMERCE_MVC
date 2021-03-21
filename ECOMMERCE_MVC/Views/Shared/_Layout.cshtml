@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ECOMMERCE_MVC</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap4.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/cartui.css" />
@@ -28,7 +28,7 @@
                         @if (String.Equals(ViewData["IsLogged"], "true"))
                         {
                             <li class="navbar-brand" style=" position: absolute !important; right: 400px;">
-                                <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index"><span style="color:white"><i class="fa fa-user"></i> Profile</span></a>
+                                <a class="nav-link" asp-area="" asp-controller="Customer1" asp-action="Index"><span style="color:white"><i class="fa fa-user"></i> @ViewData["Name"]</span></a>
                             </li>
 
                         }

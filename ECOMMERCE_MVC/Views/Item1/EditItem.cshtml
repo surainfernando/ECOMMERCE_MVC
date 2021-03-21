@@ -1,6 +1,10 @@
 ﻿@model ECOMMERCE_MVC.Models.Item
 @{
     ViewData["Title"] = "EditItem";
+
+    ViewData["IsLogged"] = @ViewBag.IsLogged;
+    ViewData["Name"] = @ViewBag.Name;
+
 }
 
 <form method="post" asp-action="EditItem">

@@ -1,7 +1,8 @@
 ﻿@model List<ECOMMERCE_MVC.Models.Item>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
     ViewData["IsLogged"] = @ViewBag.IsLogged;
+    ViewData["Name"] = @ViewBag.Name;
 }
 <body onload="setInitialSelection(@ViewBag.option)">
 <div>

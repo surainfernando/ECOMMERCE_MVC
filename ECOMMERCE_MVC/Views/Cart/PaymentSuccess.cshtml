@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "PaymentSuccess";
+    ViewData["IsLogged"] = @ViewBag.IsLogged;
+    ViewData["Name"] = @ViewBag.Name;
 }
 <body onload="redirector()">
 <h1 class="text-center">Payment Successful!</h1>
