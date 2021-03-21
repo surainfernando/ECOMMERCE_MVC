@@ -113,7 +113,8 @@ else
             </div>
             <div class="row">
                 <div class="col-12" style="padding-bottom: 10px">
-                    <a asp-controller="Cart" asp-action="CheckOut" class="btn btn-warning w-100">CHECKOUT NOW</a>
+                    <button type="button" class="btn btn-warning w-100" onclick=CheckOut("@ViewBag.Count")>CHECKOUT NOW</button>
+                  
                 </div>
             </div>
             @*https://assets.justinmind.com/wp-content/uploads/2019/10/shopping-cart-design-jimmy-choo.png*@
@@ -130,8 +131,22 @@ else
 
 			}
 
-		}
-		
+        }
+
+        function CheckOut(x) {
+            if (x == "0") {
+                alert("Your shopping cart is empty. Please add  items to your cart.")
+
+
+            }
+            else {
+window.location.href = '@Url.Action("CheckOut", "Cart")/';
+
+            }
+        
+
+        }
+
 
     </script>
 

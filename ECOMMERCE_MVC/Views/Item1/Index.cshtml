@@ -22,76 +22,79 @@
 
     </ul>
     <br />
-    <h1>Details of items to be sold</h1>
+    <h1>Details Of Items To Be Sold</h1>
+    <p style="font-size:16px;color:slategrey"> Given below are alist of items that youhave added to the marketplace for selling. The  items  beliwhave not been added to any customers shopping cart and they have not been sold yet.<br/>
+    The items which have been added to the customers shopping cart but which have not been sold yet can be viewd in the second tab above.<br/>
+    The items which have been sold can be viewed from the third tab above.
+    </p>
+
+
+        <div class="container p-3">
+            <div class="row pt-4">
+                <div class="col-6">
 
 
 
-    <div class="container p-3">
-        <div class="row pt-4">
-            <div class="col-6">
-               
-
-
+                </div>
+                <div class="col-6 text-right">
+                    <a asp-controller="Item1" asp-action="AddItem" class="btn btn-info">
+                        Add New Item To Sell
+                    </a>
+                </div>
             </div>
-            <div class="col-6 text-right">
-                <a asp-controller="Item1" asp-action="AddItem" class="btn btn-info">
-                    Add New Item To Sell
-                </a>
-            </div>
-        </div>
 
-        <br /><br />
+            <br /><br />
 
-        @if (Model.Count() > 0)
-        {
-            <table class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <th style="word-break:break-all;">Description</th>
-                        <th>Category</th>
-
-                        <th>Price</th>
-                        <th>Image</th>
-                        <th>Options</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var obj in Model)
-                    {
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
                         <tr>
-                            <td>@obj.Name</td>
-                            <td style="word-break:break-all;">@obj.Description</td>
-                            <td>@obj.CategoryText</td>
-                            <td>Rs @obj.Price .00</td>
-                            <td><img src="@obj.ImageLink" width="100px"></td>
+                            <th>
+                                Name
+                            </th>
+                            <th style="word-break:break-all;">Description</th>
+                            <th>Category</th>
 
-                            <td class="text-center">
-                                <div class="w-75 btn-group" role="group">
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Options</th>
 
-                                    <a asp-controller="Item1" asp-route-Id="@obj.ItemId" asp-action="EditItem" class="btn btn-info mx-2">
-                                        <i class="fas fa-edit">Edit</i>
-                                    </a>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
+                        {
+                            <tr>
+                                <td>@obj.Name</td>
+                                <td style="word-break:break-all;">@obj.Description</td>
+                                <td>@obj.CategoryText</td>
+                                <td>Rs @obj.Price .00</td>
+                                <td><img src="@obj.ImageLink" width="100px"></td>
 
-                                    @*<a asp-controller="Item1" asp-route-Id="@obj.ItemId" asp-action="EditItem" class="btn btn-danger mx-2">
+                                <td class="text-center">
+                                    <div class="w-75 btn-group" role="group">
+
+                                        <a asp-controller="Item1" asp-route-Id="@obj.ItemId" asp-action="EditItem" class="btn btn-info mx-2">
+                                            <i class="fas fa-edit">Edit</i>
+                                        </a>
+
+                                        @*<a asp-controller="Item1" asp-route-Id="@obj.ItemId" asp-action="EditItem" class="btn btn-danger mx-2">
                                             <i class="far fa-trash-alt">Delete</i>
                                         </a>*@
-                                    <a onclick="ConfirmDelete(@obj.ItemId)" href="#" class="btn btn-primary mx-2">
-                                        <i class="fas fa-edit">Delete</i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p> You have not added any items to be sold.</p>
+                                        <a onclick="ConfirmDelete(@obj.ItemId)" href="#" class="btn btn-primary mx-2">
+                                            <i class="fas fa-edit">Delete</i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+<p> You have not added any items to be sold.</p>
         }
 
     </div>

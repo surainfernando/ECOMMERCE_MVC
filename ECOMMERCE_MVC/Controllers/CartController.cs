@@ -29,7 +29,7 @@ namespace ECOMMERCE_MVC.Controllers
                 List<Item> objList = CartItem.GetCartItems(customer.Id, _connection);
                 if ((objList != null) && (!objList.Any()))
                 {
-
+                    ViewBag.Count = 0;
 
                     ViewBag.Total = 0;
 
@@ -38,8 +38,9 @@ namespace ECOMMERCE_MVC.Controllers
                     double total = 0;
                     foreach (var item in objList)
                     {
+                        ViewBag.Count = 1;
                         // Console.WriteLine("Amount is {0} and type is {1}", money.amount, money.type);
-                       total = item.Price + total;
+                        total = item.Price + total;
                     
                     }
                     

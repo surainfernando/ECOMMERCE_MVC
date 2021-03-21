@@ -177,8 +177,19 @@ namespace ECOMMERCE_MVC.Controllers
             
           
         }
+        public IActionResult About(int id)
+        {
+            return View();
+        
+        }
+        public IActionResult Technology(int id)
+        {
+            return View();
 
-       
+        }
+
+
+
 
         public IActionResult TempSession()
         {
