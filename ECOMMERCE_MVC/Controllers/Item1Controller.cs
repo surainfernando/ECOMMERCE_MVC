@@ -66,6 +66,68 @@ namespace ECOMMERCE_MVC.Controllers
            
         }
 
+        public IActionResult ItemsInCart()
+        {
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                List<Item> objList = Item.GetSellersItemsInCart(customer.Id, _connection); ;
+               
+
+                return View(objList);
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+
+
+        }
+        public IActionResult ItemsSold()
+        {
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                List<Item> objList = Item.GetSellersSoldItems(customer.Id, _connection); ;
+                if ((objList != null) && (!objList.Any()))
+                {
+
+
+                    ViewBag.Total = "00";
+
+                }
+                else
+                {
+                    double total = 0;
+                    foreach (var item in objList)
+                    {
+                        // Console.WriteLine("Amount is {0} and type is {1}", money.amount, money.type);
+                        total = item.Price + total;
+
+                    }
+
+                    ViewBag.Total = total;
+
+
+
+                }
+
+                return View(objList);
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Customer1");
+
+            }
+
+
+        }
+
 
         public IActionResult AddItem()
         {
@@ -168,6 +230,29 @@ namespace ECOMMERCE_MVC.Controllers
                 return RedirectToAction("Index", "Customer1");
             }
            
+        }
+        public IActionResult AddItemToCirculationAgain(int id)
+        {
+            try
+            {
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+
+                Debug.WriteLine("http:// Edit  called");
+                // Item.EditItemDb(a, _connection);
+                CartItem.DeleteCartItem(_connection, id);
+                Item.ItemRemovedFromCart(id, _connection);
+
+
+                return RedirectToAction("ItemsInCart", "item1");
+            }
+            catch (Exception e)
+            {
+
+                return RedirectToAction("ItemsInCart", "item1");
+            }
+
+            return RedirectToAction("ItemsInCart", "item1");
+
         }
 
         public void getCustomerDetails1(int idd)
