@@ -37,9 +37,26 @@ namespace ECOMMERCE_MVC.Controllers
         public IActionResult Index(String? option)
         {    if (TempData["list"] != null)
             {
-                Debug.WriteLine("9999999999999999999999999999");
-                List<Item> objList = JsonConvert.DeserializeObject<List<Item>>((string)TempData["list"]);
-                return View(objList);
+
+                List<Item> objList = new List<Item>();
+
+                try
+                {
+                   objList = JsonConvert.DeserializeObject<List<Item>>((string)TempData["list"]);
+                    var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                    ViewBag.IsLogged = "true";
+                    ViewBag.Name = customer.Name;
+                    // Debug.WriteLine("http:// Edit  called");
+                   
+                    return View(objList);
+                }
+                catch (Exception e)
+                {
+                   objList = JsonConvert.DeserializeObject<List<Item>>((string)TempData["list"]);
+                    ViewBag.IsLogged = "false";
+                    return View(objList);
+                }
+        
             }
 
             else {
