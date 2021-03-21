@@ -13,14 +13,15 @@ namespace ECOMMERCE_MVC.Models
         public int OwnerId { get; set; }
 
         public int ItemId { get; set; }
+        public string DateModiFied { get; set; }
 
         public static int AddCartItem(int OwnerId,int ItemId,SqlConnection _connection)
         {
 
             _connection.Open();
             // string query = $"Insert into customer(name) values('y')";
-
-            string query = $"Insert into cart(ownerid,itemid) values({OwnerId},{ItemId})";
+            DateTime today = DateTime.Today;
+            string query = $"Insert into cart(ownerid,itemid,date_modified) values({OwnerId},{ItemId},'{today.ToString("MMMM dd, yyyy")}')";
             SqlCommand command = new SqlCommand(query, _connection);
             int rows = command.ExecuteNonQuery();
 

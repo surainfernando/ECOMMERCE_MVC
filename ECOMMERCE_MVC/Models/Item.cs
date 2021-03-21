@@ -39,6 +39,7 @@ namespace ECOMMERCE_MVC.Models
 
         public int SellerId { get; set; }
         public int CurrentOwner { get; set; }
+        public string DateModiFied { get; set; }
 
 
 
@@ -64,7 +65,7 @@ namespace ECOMMERCE_MVC.Models
             // but if -99 is passed as id , it means it's for diaply purposes only in home page, so all itrms will be returned.
             List<Item> ItemList = new List<Item>();
             _connection.Open();
-            string query = $"select * from item where sellerid ={id}";
+            string query = $"select * from item where sellerid ={id} and isavailable=1";
             if (id == -99)
             {
                 query = $"select * from item where isavailable=1";
