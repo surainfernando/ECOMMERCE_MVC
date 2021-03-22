@@ -90,6 +90,8 @@ namespace ECOMMERCE_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(Models.Customer a)
         {
+            a.Password = (a.Password).Trim();
+            a.Email = (a.Email).Trim();
             int d = ECOMMERCE_MVC.Models.Customer.InsertCustomer(a,_connection);
             Debug.Write("Integer Message Is"+d);
             if (d == 1)
