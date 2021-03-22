@@ -6,55 +6,73 @@
 <form method="post" asp-action="Index">
     <br>
     <div class="border p-3">
-
-        <div class="form-group row">
-            <h1 style="text-align: center;"> Sign In</h1>
-        </div>
+        <div class="text-center"><span style="color:red;font-size:40px; font-family: 'Brush Script MT', cursive; ">V.I Note</span></div>
         <div class="row">
-            <div class="col-8">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="Email"></label>
-                    </div>
-                    <div class="col-8">
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
+            <div class="col-4"></div>
+            <div class="col-4">
+                <p>
 
-                </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="Password"></label>
-                    </div>
-                    <div class="col-8">
-                        <input type="password" asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
+                    <span style=";font-size:14px; font-family: 'Brush Script MT', cursive; ">
+                        Since this website is created to demonstrate my competency at ASPNET ,I have created a default email and password to by anyone who visits the website. Normal sign up and sign in functionalities are present.
+                    </span>
+                    <span style="color:red;">
+                        <br /> Username=a@a.a
+                        <br /> Password=aaaa
+                    </span>
 
-                </div>
-                <div class="form-group row">
-                    <div class="col-8 offset-4 row">
+                </p>
+            </div>
+        </div>
+       
 
-                        <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Sign In" />
+            <div class="form-group row">
+                <h1 style="text-align: center;"> Sign In</h1>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Email"></label>
                         </div>
-                        <div class="col">
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                        <div class="col-8">
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Password"></label>
+                        </div>
+                        <div class="col-8">
+                            <input type="password" asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-8 offset-4 row">
+
+                            <div class="col">
+                                <input type="submit" class="btn btn-info w-100" value="Sign In" />
+                            </div>
+                            <div class="col">
+                                <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-6"></div>
-                    <div class="col-md-4"> <a asp-controller="Customer1" asp-action="Register"><span style="color:darkgray"> <u>Would you like to sign up?</u></span></a></div>
-                    
-                    <div class="col-md-4"></div>
-                    
-                       
-                    
+                    <div class="form-group row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-5"> <a asp-controller="Customer1" asp-action="Register"><span style="font-size:15px;color:#1e1e1e"> <u>Would you like to sign up?</u></span></a></div>
+
+                        <div class="col-md-4"></div>
+
+
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <div class="col-4">
         @* Keep this empty *@
 

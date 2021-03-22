@@ -146,11 +146,23 @@ namespace ECOMMERCE_MVC.Controllers
 
         }
 
-        public IActionResult Privacy(String id)
+        public IActionResult Privacy()
         {
-            ViewBag.name = id;
-            ViewBag.name1 = "fffff";
-            return View();
+            try
+            {
+               
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
+                // Debug.WriteLine("http:// Edit  called");
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                ViewBag.IsLogged = "false";
+                return View();
+            }
         }
         public IActionResult ItemView(int id)
         {
@@ -177,14 +189,42 @@ namespace ECOMMERCE_MVC.Controllers
             
           
         }
-        public IActionResult About(int id)
+        public IActionResult About()
         {
-            return View();
-        
+            try
+            {
+
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
+                // Debug.WriteLine("http:// Edit  called");
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                ViewBag.IsLogged = "false";
+                return View();
+            }
+
         }
-        public IActionResult Technology(int id)
+        public IActionResult Technology()
         {
-            return View();
+            try
+            {
+
+                var customer = JsonConvert.DeserializeObject<Models.Customer>(HttpContext.Session.GetString("CustomerSession"));
+                ViewBag.IsLogged = "true";
+                ViewBag.Name = customer.Name;
+                // Debug.WriteLine("http:// Edit  called");
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                ViewBag.IsLogged = "false";
+                return View();
+            }
 
         }
 
